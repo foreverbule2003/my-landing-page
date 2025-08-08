@@ -27,7 +27,6 @@
             const FinancialCharts = () => {
                 const [activeChart, setActiveChart] = useState('quarterly');
 
-                // Data... (omitted for brevity, same as before)
                 const quarterlyData = [
                     { period: '2023 Q1', 營業收入: 35136, 本期淨利: -1966, 綜合損益總額: -1966 },
                     { period: '2023 Q2', 營業收入: 55696, 本期淨利: 4365, 綜合損益總額: 4365 },
@@ -79,7 +78,6 @@
                     }
 
                     return React.createElement('div', { className: "space-y-8" }, [
-                        // Charts... (omitted for brevity, same as before)
                         React.createElement('div', { key: 'revenue-chart', className: "bg-white p-6 rounded-lg shadow-lg" }, [
                             React.createElement('h3', { key: 'title', className: "text-lg font-bold mb-4 text-gray-800" }, "營業收入趨勢"),
                             React.createElement(ResponsiveContainer, { key: 'chart', width: "100%", height: 300 },
@@ -127,15 +125,14 @@
 
                 return React.createElement('div', { className: "p-6 bg-gray-50 min-h-screen" },
                     React.createElement('div', { className: "max-w-7xl mx-auto" }, [
-                        // UI Elements... (omitted for brevity, same as before)
                         React.createElement('h1', { key: 'title', className: "text-3xl font-bold text-center mb-8 text-gray-800" }, "財務表現分析儀表板"),
-                        React.createElement('div', { key: 'buttons', className: "flex justify-center mb-8" },
+                        React.createElement('div', { key: 'buttons', className: "flex justify-center mb-8" }, [
                             React.createElement('div', { className: "bg-white rounded-lg p-1 shadow-md" }, [
                                 React.createElement('button', { key: 'quarterly', onClick: () => setActiveChart('quarterly'), className: `px-6 py-2 rounded-md font-medium transition-colors ${ activeChart === 'quarterly' ? 'bg-blue-500 text-white shadow-md' : 'text-gray-600 hover:text-blue-500' }` }, "季度數據"),
                                 React.createElement('button', { key: 'halfyearly', onClick: () => setActiveChart('halfyearly'), className: `px-6 py-2 rounded-md font-medium transition-colors ${ activeChart === 'halfyearly' ? 'bg-blue-500 text-white shadow-md' : 'text-gray-600 hover:text-blue-500' }` }, "半年度數據"),
                                 React.createElement('button', { key: 'yearly', onClick: () => setActiveChart('yearly'), className: `px-6 py-2 rounded-md font-medium transition-colors ${ activeChart === 'yearly' ? 'bg-blue-500 text-white shadow-md' : 'text-gray-600 hover:text-blue-500' }` }, "年度數據")
                             ])
-                        ),
+                        ]),
                         React.createElement('div', { key: 'metrics', className: "grid grid-cols-1 md:grid-cols-3 gap-6 mb-8" }, [
                             React.createElement('div', { key: 'revenue', className: "bg-white p-6 rounded-lg shadow-lg border-l-4 border-blue-500" }, [
                                 React.createElement('h3', { key: 'title', className: "text-sm font-medium text-gray-500 mb-2" }, "2025年營業收入 (至Q2)"),
