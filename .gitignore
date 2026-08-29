@@ -62,4 +62,9 @@ logs/
 
 # Claude Code local settings (per-machine permission cache)
 .claude/settings.local.json
-.
+
+# Archify 圖表產物（skill 安裝於 ~/.claude/skills/archify，本體不在 repo）
+# 暫存草稿與一次性渲染；要進版控的圖請放 docs/diagrams/
+.archify/
+*.archify.json
+*.archify.html
