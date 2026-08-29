@@ -64,7 +64,13 @@ logs/
 .claude/settings.local.json
 
 # Archify 圖表產物（skill 安裝於 ~/.claude/skills/archify，本體不在 repo）
-# 暫存草稿與一次性渲染；要進版控的圖請放 docs/diagrams/
+# 只有規格 JSON 進版控（docs/diagrams/*.architecture.json）；
+# 渲染出的 HTML 與 visual-check 截圖屬可再生產物，一律忽略。
+# 重生指令：node ~/.claude/skills/archify/bin/archify.mjs deliver architecture \
+#   docs/diagrams/<name>.architecture.json docs/diagrams/<name>.html \
+#   --quality showcase --repo-root .
 .archify/
 *.archify.json
 *.archify.html
+docs/diagrams/*.html
+docs/diagrams/*.png

@@ -125,6 +125,34 @@ timboy/
 | **Firestore 規則** | ⚠️ **不會**隨 push 自動部署。修改 `firebase/firestore.rules` 後需手動執行：`firebase deploy --only firestore:rules` |
 | **CB 資料排程** | 雲端軌由 GitHub Actions 每交易日自動跑；本地 DDE 軌僅限 Windows 交易機（詳見 [CB_DATA_FLOW.md](./docs/CB_DATA_FLOW.md)），健康檢查可用 `/check-cb-pipeline` |
 
+## 🗺️ 架構總覽圖 (Architecture Overview)
+
+整個 repo 的互動式架構圖，用來一眼看完「程式碼怎麼變成線上網站、資料又是從哪裡來的」。
+
+**看什麼**：圖分三條主線——
+
+| 主線 | 內容 |
+| --- | --- |
+| **建構部署** | 開發機 `push main` → Vite 6 多入口 rollup → `deploy.yml` 上傳 dist → GitHub Pages |
+| **前端執行期** | 靜態頁載入後直接查 Firestore；Firebase Auth 負責 Journal 登入守門 |
+| **CB 資料雙軌** | 雲端軌 GitHub Actions（每交易日 13:40 / 14:15）+ 本地軌 Windows XQ DDE → 皆寫入 Firestore |
+
+旁邊的 `品質關卡`（vitest · playwright · guard）是提交前的驗證分支，對應 `npm run guard` / `npm test`。
+
+**怎麼看**：HTML 是單一自帶樣式的檔案，直接用瀏覽器開即可，支援深淺色切換、3 組 Guided View 導覽、搜尋聚焦與 PNG/SVG 匯出。
+
+```bash
+open docs/diagrams/repo-overview.html
+```
+
+**版控策略**：只有規格檔 `docs/diagrams/repo-overview.architecture.json` 進 git；渲染出的 HTML 與截圖是可再生產物，已在 `.gitignore` 忽略。改架構時改規格檔，然後重生：
+
+```bash
+node ~/.claude/skills/archify/bin/archify.mjs deliver architecture docs/diagrams/repo-overview.architecture.json docs/diagrams/repo-overview.html --quality showcase --repo-root .
+```
+
+> 規格檔內每個節點都帶 `sources` 指向真實檔案（如 `vite.config.js:178`、`.github/workflows/daily-hot-cb.yml`），並釘在 commit `5c871f6`；archify 會在渲染時驗證這些路徑存在。架構若大幅變動，記得同步更新規格檔的 source 參照。
+
 ## 📚 相關文件
 
 - [FEATURES.md](./docs/FEATURES.md) - 功能清單
@@ -136,6 +164,7 @@ timboy/
 - [CHANGELOG.md](./CHANGELOG.md) - 更新日誌
 - [ARCHITECTURE.md](./docs/ARCHITECTURE.md) - 架構決策記錄 (ADR)
 - [CB_DATA_FLOW.md](./docs/CB_DATA_FLOW.md) - CB 爬蟲資料流架構
+- [repo-overview.architecture.json](./docs/diagrams/repo-overview.architecture.json) - Repo 全貌架構圖規格（見下方「架構總覽圖」）
 
 ## 🔗 連結
 

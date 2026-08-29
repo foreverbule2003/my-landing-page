@@ -1,0 +1,415 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "TimZ me repo 全貌架構",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1340,
+      570
+    ],
+    "repository": {
+      "url": "https://github.com/foreverbule2003/me",
+      "revision": "5c871f6a703b0d21490505ff470a56b007acc7dd"
+    },
+    "views": [
+      {
+        "id": "build-deploy",
+        "label": "建構與部署",
+        "focus": [
+          "dev",
+          "guard",
+          "vite",
+          "pages"
+        ],
+        "note": "push main 觸發 deploy.yml，Vite 多入口建構後上傳 dist 至 GitHub Pages。"
+      },
+      {
+        "id": "runtime",
+        "label": "前端執行期",
+        "focus": [
+          "pages",
+          "site",
+          "tools",
+          "firestore",
+          "auth"
+        ],
+        "note": "靜態頁面載入後，直接向 Firestore 取資料，Journal 由 Firebase Auth 守門。"
+      },
+      {
+        "id": "cb-pipeline",
+        "label": "CB 資料雙軌",
+        "focus": [
+          "actions",
+          "dde",
+          "bridge",
+          "firestore",
+          "tools"
+        ],
+        "note": "雲端 Actions 軌負責每日行情，本地 Windows DDE 軌負責高精度覆寫。"
+      }
+    ]
+  },
+  "components": [
+    {
+      "id": "guard",
+      "type": "security",
+      "label": "品質關卡",
+      "sublabel": "vitest · playwright · guard",
+      "tag": "npm run guard / test",
+      "pos": [
+        40,
+        180
+      ],
+      "size": [
+        180,
+        64
+      ],
+      "sources": [
+        {
+          "path": "tools/guard/check-datapath.js"
+        },
+        {
+          "path": "package.json",
+          "label": "scripts.guard"
+        }
+      ]
+    },
+    {
+      "id": "dev",
+      "type": "external",
+      "label": "開發機 (macOS)",
+      "sublabel": "git push main",
+      "pos": [
+        40,
+        30
+      ],
+      "size": [
+        180,
+        64
+      ],
+      "sources": [
+        {
+          "path": "package.json"
+        }
+      ]
+    },
+    {
+      "id": "vite",
+      "type": "backend",
+      "label": "Vite 6 建構",
+      "sublabel": "多入口 rollup 打包",
+      "tag": "React 19 + Tailwind 4",
+      "pos": [
+        380,
+        30
+      ],
+      "size": [
+        185,
+        64
+      ],
+      "sources": [
+        {
+          "path": "vite.config.js",
+          "line": 178,
+          "label": "rollupOptions.input"
+        }
+      ]
+    },
+    {
+      "id": "pages",
+      "type": "cloud",
+      "label": "GitHub Pages",
+      "sublabel": "foreverbule2003.github.io/me",
+      "pos": [
+        720,
+        30
+      ],
+      "size": [
+        190,
+        64
+      ],
+      "sources": [
+        {
+          "path": ".github/workflows/deploy.yml"
+        }
+      ]
+    },
+    {
+      "id": "site",
+      "type": "frontend",
+      "label": "首頁與旅程頁",
+      "sublabel": "TimBoy 模擬器 · 4 段旅程",
+      "pos": [
+        720,
+        180
+      ],
+      "size": [
+        190,
+        64
+      ],
+      "sources": [
+        {
+          "path": "index.html"
+        },
+        {
+          "path": "src/views/HomeView.jsx"
+        }
+      ]
+    },
+    {
+      "id": "tools",
+      "type": "frontend",
+      "label": "財務工具頁",
+      "sublabel": "戰情室 · 計算機 · 儀表板",
+      "pos": [
+        1060,
+        180
+      ],
+      "size": [
+        190,
+        64
+      ],
+      "sources": [
+        {
+          "path": "tools/cb-war-room.html"
+        },
+        {
+          "path": "tools/cb-calculator.html"
+        }
+      ]
+    },
+    {
+      "id": "auth",
+      "type": "security",
+      "label": "Firebase Auth",
+      "sublabel": "Google 登入",
+      "tag": "Journal 守門",
+      "pos": [
+        380,
+        180
+      ],
+      "size": [
+        185,
+        64
+      ],
+      "sources": [
+        {
+          "path": "src/lib/firebase-client.mjs",
+          "line": 24
+        }
+      ]
+    },
+    {
+      "id": "firestore",
+      "type": "database",
+      "label": "Firestore",
+      "sublabel": "cb_history · hot_cb_snapshots",
+      "tag": "CB 資料權威來源",
+      "pos": [
+        1060,
+        320
+      ],
+      "size": [
+        190,
+        64
+      ],
+      "sources": [
+        {
+          "path": "src/lib/CbHistoryService.js"
+        },
+        {
+          "path": "firebase/firestore.rules"
+        }
+      ]
+    },
+    {
+      "id": "actions",
+      "type": "cloud",
+      "label": "GitHub Actions 排程",
+      "sublabel": "ubuntu runner · 每交易日",
+      "pos": [
+        720,
+        470
+      ],
+      "size": [
+        190,
+        64
+      ],
+      "sources": [
+        {
+          "path": ".github/workflows/daily-hot-cb.yml"
+        },
+        {
+          "path": ".github/workflows/daily-cb-history.yml"
+        }
+      ]
+    },
+    {
+      "id": "bridge",
+      "type": "backend",
+      "label": "xq_bridge.py",
+      "sublabel": "高精度保護 + 匯出",
+      "pos": [
+        380,
+        470
+      ],
+      "size": [
+        185,
+        64
+      ],
+      "sources": [
+        {
+          "path": "tools/xq_bridge.py"
+        },
+        {
+          "path": "tools/lib/cb_service.py"
+        }
+      ]
+    },
+    {
+      "id": "dde",
+      "type": "external",
+      "label": "Windows 交易機",
+      "sublabel": "XQ DDE 報價 + Excel",
+      "tag": "僅限 Windows",
+      "pos": [
+        40,
+        470
+      ],
+      "size": [
+        180,
+        64
+      ],
+      "sources": [
+        {
+          "path": "CB_Sync_Master.bat"
+        },
+        {
+          "path": "tools/setup_scheduler.ps1"
+        }
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "dev-guard",
+      "from": "dev",
+      "to": "guard",
+      "label": "提交前驗證",
+      "variant": "dashed",
+      "labelDy": 32
+    },
+    {
+      "id": "dev-vite",
+      "from": "dev",
+      "to": "vite",
+      "label": "push main 觸發 deploy.yml",
+      "variant": "emphasis"
+    },
+    {
+      "id": "vite-pages",
+      "from": "vite",
+      "to": "pages",
+      "label": "上傳 dist artifact",
+      "variant": "emphasis"
+    },
+    {
+      "id": "pages-site",
+      "from": "pages",
+      "to": "site",
+      "label": "靜態載入",
+      "labelDy": 32
+    },
+    {
+      "id": "pages-tools",
+      "from": "pages",
+      "to": "tools",
+      "label": "靜態載入"
+    },
+    {
+      "id": "site-firestore",
+      "from": "site",
+      "to": "firestore",
+      "label": "trips / journal_entries"
+    },
+    {
+      "id": "tools-firestore",
+      "from": "tools",
+      "to": "firestore",
+      "label": "查詢 + 1 小時本地快取",
+      "labelDy": 32
+    },
+    {
+      "id": "auth-site",
+      "from": "auth",
+      "to": "site",
+      "label": "驗證 Journal 存取",
+      "variant": "security"
+    },
+    {
+      "id": "actions-firestore",
+      "from": "actions",
+      "to": "firestore",
+      "label": "13:40 熱門 / 14:15 歷史寫入",
+      "fromSide": "right",
+      "toSide": "bottom",
+      "labelAt": [
+        1010,
+        502
+      ]
+    },
+    {
+      "id": "dde-bridge",
+      "from": "dde",
+      "to": "bridge",
+      "label": "DDE 報價 + 高精度轉換價"
+    },
+    {
+      "id": "bridge-firestore",
+      "from": "bridge",
+      "to": "firestore",
+      "label": "覆寫 cb_history",
+      "variant": "dashed",
+      "fromSide": "top",
+      "toSide": "bottom"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "建構與部署",
+      "items": [
+        "Vite 6 多入口：首頁、4 段旅程、5 個工具頁",
+        "React 19 + Tailwind 4 + Chart.js",
+        "push main → deploy.yml → GitHub Pages"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "資料層",
+      "items": [
+        "Firestore 是 CB 資料的權威來源",
+        "前端 1 小時快取，壓低雲端讀取成本",
+        "hot-cb.json / cb-data.json 不進 Git"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "自動化雙軌",
+      "items": [
+        "雲端軌：Actions 每交易日無人值守",
+        "本地軌：Windows 交易機 DDE，低頻高精度",
+        "健康檢查指令 /check-cb-pipeline"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "安全與例外",
+      "items": [
+        "Firebase Auth Google 登入保護 Journal",
+        "firestore.rules 不隨 push 部署，需手動發布"
+      ]
+    }
+  ]
+}

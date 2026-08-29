@@ -4,6 +4,19 @@
 
 格式基於 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)。
 
+## [2.6.1] - 2026-08-29 (Repo 架構總覽圖)
+
+### 新增 (Added) 🚀
+
+- **Repo 全貌架構圖規格 (`docs/diagrams/repo-overview.architecture.json`)**: 以 archify skill 描述的全 repo 架構，涵蓋三條主線——建構部署（開發機 → Vite 多入口 → deploy.yml → GitHub Pages）、前端執行期（靜態頁 → Firestore，Firebase Auth 守 Journal）、CB 資料雙軌（Actions 雲端軌 + Windows XQ DDE 本地軌 → Firestore）。含 3 組 Guided View 定義，source 參照釘在 commit `5c871f6`。渲染出的互動式 HTML 屬可再生產物，不進版控。
+
+### 變更 (Changed) 🔄
+
+- **README 新增「架構總覽圖」章節**: 說明圖分三條主線（建構部署、前端執行期、CB 資料雙軌）、如何開啟、以及「規格進版控、HTML 可再生」的策略與重生指令。
+- **`.gitignore` archify 規則收斂**: 改為只讓規格 JSON 進版控，忽略 `docs/diagrams/*.html` 與 `*.png`，並在註解內附上重生圖表的 `archify deliver` 指令。
+
+---
+
 ## [2.6.0] - 2026-07-06 (Trip Scaffold v4.0 & /commit Workflow)
 
 ### 新增 (Added) 🚀
