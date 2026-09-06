@@ -4,6 +4,20 @@
 
 格式基於 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)。
 
+## [2.7.0] - 2026-09-06 (2024 京都回顧行程)
+
+### 新增 (Added) 🚀
+
+- **2024 京都・嵐山・宇治 8日旅 (`trips/2024-kyoto/`)**: 本站第一個「回顧型」旅程頁面，資料全數由 Google Maps 時間軸截圖（2024/03/09-03/16）與訂位紀錄還原，而非事前規劃稿。以 Trip Scaffold v4.0 產生，8 頁籤架構完整，含 40 個實際造訪點、4 間住宿、8 段每日交通路線與 3 階段分段（京都東山 / 嵐山 / 採買返程）。
+
+### 變更 (Changed) 🔄
+
+- **回顧型旅程的資料原則**: `data.js` 僅記錄時間軸實際存在的資訊；缺漏處（房價、消費金額、被截圖裁切的行程段）明確標註「時間軸未記錄」而不以推測填補，`todoData` 改作資料補完清單使用。
+- **行程頁只保留造訪點**: 純移動段（僅有距離與耗時、無具名地點者）一律不進 `itineraryData`，其交通資訊改併入抵達點的 `subText` 與 `transport`，逐段距離時間則完整保存於交通頁籤的 `recommendedRoutes`。
+- **`recommendedRoutes` 補上 `origin` / `destination`**: `scripts/sync-travel-spec.mjs` 產生交通章節時需要這兩個欄位，缺少時 spec.md 會印出 `(undefined ➔ undefined)`。2024-kyoto 已補齊。
+
+---
+
 ## [2.6.1] - 2026-08-29 (Repo 架構總覽圖)
 
 ### 新增 (Added) 🚀

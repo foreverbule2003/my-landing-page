@@ -31,7 +31,7 @@
 │   │   └── 💰 預算規劃 (budget)
 │   ├── 🌴 2025 宿霧 (trips/2025-cebu/)
 │   ├── 🏯 2025 大阪 (trips/2025-osaka/)
-│   └── 🦐 2026 伊勢志摩 (trips/2026-ise-shima/) [Vite+React]
+│   ├── 🦐 2026 伊勢志摩 (trips/2026-ise-shima/) [Vite+React]
 │       ├── 📋 行程總覽 (overview)
 │       │   ├── 航班資訊
 │       │   ├── 行程概覽 (Timeline)
@@ -54,6 +54,8 @@
 │       ├── 🛍️ 購物清單 (shopping)
 │       │   └── 美妝購物攻略 v13.0
 │       └── 💰 預算規劃 (budget)
+│   └── 🍵 2024 京都 (trips/2024-kyoto/) [Vite+React・回顧型]
+│       └── 8 頁籤結構同 2026 東京（資料源為 Google Maps 時間軸回顧）
 │
 ├── 📓 JOURNAL (journal/)
 │   └── Vibe Coding 日記
@@ -80,6 +82,7 @@
 | 2026 沖繩      | `/trips/2026-okinawa/index.html`               | ✅ 完成   | Vite+React   |
 | 2025 大阪      | `/trips/2025-osaka/index.html`                 | 🚧 建置中 | CDN+Babel    |
 | 2026 伊勢志摩  | `/trips/2026-ise-shima/index.html`             | ✅ 完成   | Vite+React   |
+| 2024 京都      | `/trips/2024-kyoto/index.html`                 | ✅ 完成   | Vite+React   |
 | 日記           | `/journal/`                                    | ✅ 完成   | Vite+React   |
 | 財務儀表板     | `/tools/financial-dashboard.html`              | ✅ 完成   | CDN+Vanilla  | \r  |
 | 期權模擬器     | `/tools/bull-put-spread.html`                  | ✅ 完成   | CDN+Vanilla  | \r  |

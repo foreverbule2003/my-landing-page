@@ -32,6 +32,11 @@ const TripsView = ({ onSetActions }) => {
       href: "/me/trips/2025-cebu/index.html",
       isExternal: true,
     },
+    {
+      label: "2024 京都",
+      href: "/me/trips/2024-kyoto/index.html",
+      isExternal: true,
+    },
   ];
 
   const handleUp = () =>

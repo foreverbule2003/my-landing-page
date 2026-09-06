@@ -187,6 +187,7 @@ export default defineConfig({
         ),
         "trips-tokyo": resolve(__dirname, "trips/2026-tokyo/index.html"),
         "trips-okinawa": resolve(__dirname, "trips/2026-okinawa/index.html"),
+        "trips-kyoto": resolve(__dirname, "trips/2024-kyoto/index.html"),
         "trips-cebu": resolve(__dirname, "trips/2025-cebu/index.html"),
         "trips-osaka": resolve(__dirname, "trips/2025-osaka/index.html"),
         "tools-options": resolve(
