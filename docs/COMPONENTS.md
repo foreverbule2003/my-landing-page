@@ -394,13 +394,19 @@ React 封裝的 Game Boy 外殼元件，處理所有外觀與互動邏輯。
 
 ### 頁面結構
 
-| 頁面       | 入口點                       | HTML                 |
-| ---------- | ---------------------------- | -------------------- |
-| 首頁       | `src/main.jsx`               | `index.html`         |
-| About      | `src/pages/about/main.jsx`   | `about/index.html`   |
-| Trips 列表 | `src/pages/trips/main.jsx`   | `trips/index.html`   |
-| Tools      | `src/pages/tools/main.jsx`   | `tools/index.html`   |
-| Journal    | `src/pages/journal/main.jsx` | `journal/index.html` |
+主站是單一 Vite 入口的 SPA，內部以 `HashRouter` 分頁（見 `src/App.jsx`）。
+About / Trips / Tools / Journal 都不是獨立 HTML，而是 hash 路由下的 View。
+
+| 頁面       | 元件                        | 網址         |
+| ---------- | --------------------------- | ------------ |
+| 首頁       | `src/views/HomeView.jsx`    | `/`          |
+| About      | `src/views/AboutView.jsx`   | `/#/about`   |
+| Trips 列表 | `src/views/TripsView.jsx`   | `/#/trips`   |
+| Tools      | `src/views/ToolsView.jsx`   | `/#/tools`   |
+| Journal    | `src/views/JournalView.jsx` | `/#/journal` |
+
+唯一的 SPA 入口是 `src/main.jsx` → `index.html`。各旅程詳情頁與 CB 工具
+則是 `vite.config.js` 內另行註冊的獨立入口，對應實體 HTML 檔。
 
 ### Firebase 設定
 
@@ -414,7 +420,7 @@ import { db, auth, googleProvider, ... } from '../lib/firebase.js';
 
 ---
 
-## 日記頁元件 (journal/index.html)
+## 日記頁元件 (`/#/journal`)
 
 ### JournalPage
 

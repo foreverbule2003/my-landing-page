@@ -38,11 +38,9 @@ npm run preview
 
 ```
 timboy/
-├── index.html              # 首頁 (TimBoy 模擬器)
-├── about/index.html        # 關於頁面
-├── trips/index.html        # 旅程列表
-├── tools/index.html        # 工具箱入口
-├── journal/                # 📓 開發日記
+├── index.html              # 唯一 SPA 入口 (TimBoy 模擬器)
+│                           #   about / trips / tools / journal
+│                           #   皆為 HashRouter 分頁 (/#/xxx)，非實體目錄
 │
 ├── src/                    # Vite ESM 入口點
 │   ├── main.jsx            # 首頁入口
@@ -119,11 +117,11 @@ timboy/
 
 ## 🚀 部署 (Deployment)
 
-| 對象 | 方式 |
-| --- | --- |
-| **網站** | push `main` 即自動觸發 `.github/workflows/deploy.yml`，build 後部署至 GitHub Pages（可用 `/deploy` 指令） |
-| **Firestore 規則** | ⚠️ **不會**隨 push 自動部署。修改 `firebase/firestore.rules` 後需手動執行：`firebase deploy --only firestore:rules` |
-| **CB 資料排程** | 雲端軌由 GitHub Actions 每交易日自動跑；本地 DDE 軌僅限 Windows 交易機（詳見 [CB_DATA_FLOW.md](./docs/CB_DATA_FLOW.md)），健康檢查可用 `/check-cb-pipeline` |
+| 對象               | 方式                                                                                                                                                        |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **網站**           | push `main` 即自動觸發 `.github/workflows/deploy.yml`，build 後部署至 GitHub Pages（可用 `/deploy` 指令）                                                   |
+| **Firestore 規則** | ⚠️ **不會**隨 push 自動部署。修改 `firebase/firestore.rules` 後需手動執行：`firebase deploy --only firestore:rules`                                         |
+| **CB 資料排程**    | 雲端軌由 GitHub Actions 每交易日自動跑；本地 DDE 軌僅限 Windows 交易機（詳見 [CB_DATA_FLOW.md](./docs/CB_DATA_FLOW.md)），健康檢查可用 `/check-cb-pipeline` |
 
 ## 🗺️ 架構總覽圖 (Architecture Overview)
 
@@ -131,10 +129,10 @@ timboy/
 
 **看什麼**：圖分三條主線——
 
-| 主線 | 內容 |
-| --- | --- |
-| **建構部署** | 開發機 `push main` → Vite 6 多入口 rollup → `deploy.yml` 上傳 dist → GitHub Pages |
-| **前端執行期** | 靜態頁載入後直接查 Firestore；Firebase Auth 負責 Journal 登入守門 |
+| 主線            | 內容                                                                                      |
+| --------------- | ----------------------------------------------------------------------------------------- |
+| **建構部署**    | 開發機 `push main` → Vite 6 多入口 rollup → `deploy.yml` 上傳 dist → GitHub Pages         |
+| **前端執行期**  | 靜態頁載入後直接查 Firestore；Firebase Auth 負責 Journal 登入守門                         |
 | **CB 資料雙軌** | 雲端軌 GitHub Actions（每交易日 13:40 / 14:15）+ 本地軌 Windows XQ DDE → 皆寫入 Firestore |
 
 旁邊的 `品質關卡`（vitest · playwright · guard）是提交前的驗證分支，對應 `npm run guard` / `npm test`。

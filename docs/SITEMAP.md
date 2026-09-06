@@ -4,13 +4,17 @@
 
 ## 視覺化結構
 
+> **路由方式**：主站採 `HashRouter`（GitHub Pages 不支援 SPA rewrite），
+> 所有主選單頁面的網址是 `/me/#/xxx`，**不是** `/me/xxx/`。
+> 各旅程詳情頁則是獨立的 Vite 入口，為實體目錄 `/me/trips/{trip}/`。
+
 ```
 🏠 首頁 (index.html)
 │
-├── 👤 ABOUT (about.html)
+├── 👤 ABOUT (#/about)
 │   └── ← 返回首頁
 │
-├── ✈️ SELECT TRIP (trips.html)
+├── ✈️ SELECT TRIP (#/trips)
 │   ├── 🗼 2026 東京 (trips/2026-tokyo/) [Vite+React]
 │   │   ├── 📋 行程總覽 (overview)
 │   │   ├── 📅 每日詳情 (itinerary)
@@ -59,10 +63,10 @@
 │   └── 🍵 2024 京都 (trips/2024-kyoto/) [Vite+React・回顧型]
 │       └── 8 頁籤結構同 2026 東京（資料源為 Google Maps 時間軸回顧）
 │
-├── 📓 JOURNAL (journal/)
+├── 📓 JOURNAL (#/journal)
 │   └── Vibe Coding 日記
 │
-└── 🔧 TOOLS & CONTACT (tools/)
+└── 🔧 TOOLS & CONTACT (#/tools)
     ├── 📊 財務儀表板 (tools/financial-dashboard.html)
     ├── 📈 期權策略模擬器 (tools/bull-put-spread.html)
     ├── 🏛️ CB 戰情室 (tools/cb-war-room.html) [整合中心]
@@ -73,12 +77,12 @@
 
 ## 頁面清單
 
-| 頁面           | 路徑                                           | 狀態      | 架構         |
+| 頁面 | 路徑 | 狀態 | 架構 |
 | -------------- | ---------------------------------------------- | --------- | ------------ | --- |
 | 首頁           | `/index.html`                                  | ✅ 完成   | Vite+React   |
-| 關於           | `/about/`                                      | ✅ 完成   | Vite+React   |
-| 旅程列表       | `/trips/`                                      | ✅ 完成   | Vite+React   |
-| 工具箱         | `/tools/`                                      | ✅ 完成   | Vite+React   |
+| 關於           | `/#/about`                                     | ✅ 完成   | Vite+React   |
+| 旅程列表       | `/#/trips`                                     | ✅ 完成   | Vite+React   |
+| 工具箱         | `/#/tools`                                     | ✅ 完成   | Vite+React   |
 | 2025 宿霧      | `/trips/2025-cebu/index.html`                  | ✅ 完成   | CDN+Babel    |
 | 2026 東京      | `/trips/2026-tokyo/index.html`                 | ✅ 完成   | Vite+React   |
 | 2026 沖繩      | `/trips/2026-okinawa/index.html`               | ✅ 完成   | Vite+React   |
@@ -86,7 +90,7 @@
 | 2026 伊勢志摩  | `/trips/2026-ise-shima/index.html`             | ✅ 完成   | Vite+React   |
 | 2024 東京迪士尼 | `/trips/2024-tokyo-disney/index.html`         | ✅ 完成   | Vite+React   |
 | 2024 京都      | `/trips/2024-kyoto/index.html`                 | ✅ 完成   | Vite+React   |
-| 日記           | `/journal/`                                    | ✅ 完成   | Vite+React   |
+| 日記           | `/#/journal`                                   | ✅ 完成   | Vite+React   |
 | 財務儀表板     | `/tools/financial-dashboard.html`              | ✅ 完成   | CDN+Vanilla  | \r  |
 | 期權模擬器     | `/tools/bull-put-spread.html`                  | ✅ 完成   | CDN+Vanilla  | \r  |
 | CB 戰情室      | `/tools/cb-war-room.html`                      | ✅ 完成   | 終極整合終端 | \r  |

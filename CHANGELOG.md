@@ -53,12 +53,17 @@
 - **行程頁只保留造訪點**: 純移動段（僅有距離與耗時、無具名地點者）一律不進 `itineraryData`，其交通資訊改併入抵達點的 `subText` 與 `transport`，逐段距離時間則完整保存於交通頁籤的 `recommendedRoutes`。
 - **`recommendedRoutes` 補上 `origin` / `destination`**: `scripts/sync-travel-spec.mjs` 產生交通章節時需要這兩個欄位，缺少時 spec.md 會印出 `(undefined ➔ undefined)`。2024-kyoto 已補齊。
 
+### 移除 (Removed) 🗑️
+
+- **SPA 遷移遺留的三個孤兒入口**: `src/pages/about/main.jsx`、`src/pages/tools/main.jsx`、`src/pages/trips/main.jsx` 自 `ae64e68` 改為 SPA 後就沒有任何 HTML 入口或 `vite.config.js` 設定引用，屬純死碼；`src/pages/trips/main.jsx` 的選單甚至還列著不存在的 2026-hokkaido。`src/pages/tools/` 底下的 cb-calculator / cb-war-room / some-company 仍是活的獨立入口，未受影響。
+
 ### 修復 (Fixed) 🐛
 
 - **`sync-travel-spec.mjs` 產出 `undefined` 字串**: 三處字串內插未防未定義值，且壞法是「產出看起來正常的檔案」而非拋錯，2026-tokyo 的 spec.md 因此帶著 3 個 `undefined` 存活數月。修正內容：(1) `origin` / `destination` 補上 `options[0]` 回退，與既有的 `steps` 回退對齊；(2) 起訖點兩者皆缺時整段省略而非印出 `(undefined ➔ undefined)`；(3) `act.transport.station` 缺值時省略括號。修正後重生 2026-tokyo 與 2024-kyoto 兩份 spec.md，`undefined` 歸零。
 - **`data.template.js` 補齊 `recommendedRoutes` 欄位契約**: 模板原本沒列 `origin` / `destination` / `type`，照模板填的旅程必然踩到上述問題；並註明多方案路線時起訖點改放在各 `option` 內。
 - **2026-tokyo Day 5 多方案路線**: 三個方案（輕井澤 / 高崎 / 草津溫泉）補上 `origin` / `destination`。
 - **2026-okinawa Day 2 路線**: 同樣缺 `origin` / `destination`（該旅程建立時模板尚未列出此欄位），補齊後重生 spec.md。至此三份自動同步的 spec 皆無 `undefined`。
+- **文件中的路由路徑全面對齊現況**: 主站是 `HashRouter`（GitHub Pages 不支援 SPA rewrite），about / trips / tools / journal 的網址是 `/#/xxx`，但 `docs/SITEMAP.md`、`docs/FEATURES.md`、`docs/COMPONENTS.md`、`README.md` 仍停留在 SPA 遷移前的世界，把它們寫成 `/trips/`、`about.html`、`trips/index.html` 等實體路徑——這些檔案早在 `ae64e68` 遷移時就已刪除，實測 `/me/trips/`、`/me/about/`、`/me/tools/`、`/me/journal/` 線上全為 404。另修正 `docs/FEATURES.md` 列出不存在的 `2026-hokkaido/` 目錄、並補上 `2026-okinawa/`。
 
 ---
 
