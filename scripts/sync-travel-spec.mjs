@@ -104,7 +104,8 @@ async function generateSpec() {
 
   md += `## 🛍️ 購物清單\n\n`;
   shoppingData.wishlist.forEach((item) => {
-    md += `- **${item.name}** (${item.nameJp}) — ¥${item.price} @ ${item.shop || "未定"}\n  > ${item.desc || ""}\n`;
+    // nameJp 缺值時省略括號，不要印出 "(undefined)"
+    md += `- **${item.name}**${item.nameJp ? ` (${item.nameJp})` : ""} — ¥${item.price} @ ${item.shop || "未定"}\n  > ${item.desc || ""}\n`;
   });
   md += `\n---\n\n`;
 

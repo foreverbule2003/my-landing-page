@@ -54,6 +54,8 @@
 │       ├── 🛍️ 購物清單 (shopping)
 │       │   └── 美妝購物攻略 v13.0
 │       └── 💰 預算規劃 (budget)
+│   ├── 🏰 2024 東京迪士尼 (trips/2024-tokyo-disney/) [Vite+React・回顧型] ✨ NEW
+│   │   └── 8 頁籤結構同 2026 東京（資料源為旅行社行程表 PDF + 紙本收據回顧）
 │   └── 🍵 2024 京都 (trips/2024-kyoto/) [Vite+React・回顧型]
 │       └── 8 頁籤結構同 2026 東京（資料源為 Google Maps 時間軸回顧）
 │
@@ -82,6 +84,7 @@
 | 2026 沖繩      | `/trips/2026-okinawa/index.html`               | ✅ 完成   | Vite+React   |
 | 2025 大阪      | `/trips/2025-osaka/index.html`                 | 🚧 建置中 | CDN+Babel    |
 | 2026 伊勢志摩  | `/trips/2026-ise-shima/index.html`             | ✅ 完成   | Vite+React   |
+| 2024 東京迪士尼 | `/trips/2024-tokyo-disney/index.html`         | ✅ 完成   | Vite+React   |
 | 2024 京都      | `/trips/2024-kyoto/index.html`                 | ✅ 完成   | Vite+React   |
 | 日記           | `/journal/`                                    | ✅ 完成   | Vite+React   |
 | 財務儀表板     | `/tools/financial-dashboard.html`              | ✅ 完成   | CDN+Vanilla  | \r  |

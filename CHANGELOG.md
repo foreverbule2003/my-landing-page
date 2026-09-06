@@ -4,6 +4,29 @@
 
 格式基於 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)。
 
+## [2.7.1] - 2026-09-06 (2024 東京迪士尼回顧行程)
+
+### 新增 (Added) 🚀
+
+- **2024 東京迪士尼五日行程頁 (`trips/2024-tokyo-disney/`)**: 第二個「回顧型」旅程頁，沿用 2.7.0（2024-kyoto）建立的回顧型慣例。與京都不同的是資料源為**旅行社行程表 PDF + 紙本收據**而非 Google Maps 時間軸：2024/09/25~09/29 第四梯、桃園出發、Day 2 走迪士尼 A 路線，八頁籤完整。
+- **收據記帳 (`expenses.csv` + 花費頁)**: 判讀紙本收據 20 張建立逐筆明細（¥65,506），花費頁只計當地自費；團費 NT$64,800 記在 `budgetData`，若併入記帳會佔去 81% 而壓垮其他分類的圓餅圖比例。
+- **`trip_notes.md` 慣例**: 存放 `data.js` 承載不了、但不該遺失的資訊——原始行程表出處、旅行社報價條件（團費級距、加價選項、費用包含與不含）、未採用的班次與路線、實際走法與行程表的落差。與自動生成的 `spec.md` 互補，補上 2024-kyoto 未涵蓋的「來源與實況」面向。
+- **`ShoppingSection` 新增 `dayLabel` prop**: 標題日期徽章原本寫死 `"Day 1-8"`（為 2026-tokyo 而寫），非 8 天的旅程一律顯示錯誤天數。改為可傳入，預設值不變、既有旅程行為不受影響。
+
+### 變更 (Changed) 🔄
+
+- **`.gitignore` 新增 `trips/*/source_*.pdf`**: 旅行社原始行程表含業務聯絡個資（姓名、手機、Line ID、Email），本 repo 為公開 repo，原始檔只留本機，內容已整理進 `spec.md` 與 `trip_notes.md`。已檢查 `trips/2026-tokyo/` 既有三份 PDF 皆為自動產生的行程小書，無第三方個資。
+- **回顧型旅程的 badge 標註**: 沿用 2024-kyoto 的 `· 回顧` 後綴（`JP · TYO · 2024 · 5D · 回顧`），讓回顧型與規劃型在 Header 上一眼可辨。
+
+### 修復 (Fixed) 🔧
+
+- **`docs/COMPONENTS.md` 的 `ShoppingSection` 文件與實作不符**: 文件寫 `categories` 是資料來源，實際上元件只渲染 `wishlist`，照文件填資料會得到整片空白的購物頁——本次即照文件填而踩中。已更正並補上常見錯誤提示。
+- **待辦事項空區塊仍渲染**: `todoData` 為空陣列時仍顯示空的「待辦事項」卡片（`weatherData`、`stationMapping` 本來就有長度守衛，獨缺這個），於 2024-tokyo-disney 的 `App.jsx` 補上。
+- **`sync-travel-spec.mjs` 購物章節的 `nameJp` 未防護**: 2.7.0 修掉三處未防護的字串內插，購物段的 `${item.nameJp}` 是漏網的第四處。既有三份 spec 剛好每筆商品都有日文名才沒觸發，本旅程有 5 筆無日文名的商品（UNIQLO 三件組、Chromecast、吹風機、迪士尼鑰匙圈、LAWSON 零食）當場印出 `(undefined)`。已比照辦理：缺值時省略括號。
+- **`recommendedRoutes` 補上 `origin` / `destination` / `type`**: 本旅程 `data.js` 是在 2.7.0 的模板契約更新前寫的，缺這三個欄位而印出 `(undefined ➔ undefined)`。補齊後重生 spec.md，`undefined` 歸零。
+
+---
+
 ## [2.7.0] - 2026-09-06 (2024 京都回顧行程)
 
 ### 新增 (Added) 🚀

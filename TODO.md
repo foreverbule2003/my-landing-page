@@ -1,6 +1,6 @@
 # 待辦事項 (TODO)
 
-> 最後更新：2026-07-06 (Workflow-P1)
+> 最後更新：2026-09-06 (2024-Tokyo-Disney)
 > **本檔案是專案唯一的 backlog**（`tasks/todo.md` 已棄用）。
 > 新增項目用 `/capture`；已完成項目由 `/commit` 歸檔至底部。
 
@@ -36,6 +36,14 @@
 - [ ] `trips/2025-cebu/` (Legacy HTML)
 
 ## 🏁 已完成歸檔 (Archived)
+
+### 2026-09-06
+
+- [x] **2024-Tokyo-Disney 新增行程（回顧型）**:
+  - 自安可旅遊行程表 PDF 整理出五日行程（2024/09/25~09/29 第四梯、桃園出發、Day 2 走迪士尼 A 路線），建立 `trips/2024-tokyo-disney/` 與 `src/pages/trips/2024-tokyo-disney/`。
+  - 判讀紙本收據 20 張成 `expenses.csv` 與花費頁記帳（¥65,506）；PDF 原始檔含業務個資，列入 `.gitignore` 不進公開 repo。
+  - 沿用 2024-kyoto（同日稍早提交）建立的回顧型定位：拿掉行前 checklist 與天氣預報，麻布台之丘保留完整介紹但標示「當天展望台未開放、未成行」。
+  - 新增 `trip_notes.md` 存放 `data.js` 承載不了的來源與實況（報價條件、未採用班次、實際走法與行程表的落差）。
 
 ### 2026-07-07
 

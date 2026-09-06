@@ -33,6 +33,11 @@ const TripsView = ({ onSetActions }) => {
       isExternal: true,
     },
     {
+      label: "2024 東京迪士尼",
+      href: "/me/trips/2024-tokyo-disney/index.html",
+      isExternal: true,
+    },
+    {
       label: "2024 京都",
       href: "/me/trips/2024-kyoto/index.html",
       isExternal: true,

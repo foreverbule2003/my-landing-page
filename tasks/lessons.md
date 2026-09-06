@@ -122,3 +122,28 @@
 - [x] rebase 完成，三處衝突兩邊內容全保留，guard/test/build 綠燈（2026-09-06）
 - [ ] `input.txt`（new-trip 的互動輸入）與根目錄 `wrapper.js`（stub readline 的非互動執行器）在 `515f3d3` 隨旅程一起進了版控，應評估加入 `.gitignore` 或移入 `tools/`
 - [ ] 考慮讓 `npm run new-trip` 在執行前自動跑一次 `git fetch` 並在 `behind > 0` 時警告
+
+---
+
+## 2026-09-06 (3)
+
+### 錯誤模式
+
+- **同一條規則、同一天、第二次踩**：上一則（`2026-09-06 (2)`）剛寫下「會動到全域註冊點的操作，開工前先 `git fetch`」，另一台機器的 session 在 18:57 建 2024-tokyo-disney 時仍未 fetch，撞出完全相同的四處衝突（`.gitignore`、`CHANGELOG.md`、`docs/SITEMAP.md`、`src/views/TripsView.jsx`）。**教訓寫進 lessons.md 不會自動傳到另一個 session** —— 檔案存在不等於被讀到。
+- 撞得更兇的是 `CHANGELOG.md`：兩邊各自開了 `[2.7.0]`，且兩邊都寫「本站第一個回顧型旅程頁面」。版本號與「首次」這類宣稱是全域唯一資源，分歧開工必然對撞。
+- **重造了已存在的輪子**：`npm run new-trip` 的 readline 在非互動 stdin 下會吃掉全部行、只回應前兩題，於是另寫了一支 spawn + 延遲寫入的驅動腳本。但根目錄早就有 `wrapper.js`（stub 掉 `readline.createInterface` 再 require new-trip）與 `input.txt`，正是為此而生 —— 就列在上一則的後續追蹤裡，卻沒被讀到。
+- **同類 bug 修了三處漏第四處**：`52a77f5` 修掉 `sync-travel-spec.mjs` 三處未防護的字串內插，購物段的 `${item.nameJp}` 漏網。既有三份 spec 剛好每筆商品都有日文名才沒觸發，本旅程有 5 筆無日文名的商品當場印出 `(undefined)`。
+
+### 修正規則
+
+- **開工儀式的落點要在工具裡，不能只在文件裡**：把 `git fetch` + `behind > 0` 警告做進 `npm run new-trip`（上一則已列為追蹤項，本次再度驗證其必要性）。靠人記得讀 lessons.md 已證明無效兩次。
+- **`CHANGELOG.md` 版本號在 commit 前重新確認**：分歧開工時先 `git fetch` 再看 `origin/main` 的最新版本號，不要沿用本地看到的。
+- **改共用腳本的字串內插時，把同檔案內所有 `${...}` 掃過一遍**：而不是只修觸發問題的那幾處。這類 bug 的壞法是「產出看起來正常的檔案」，不會拋錯，靠的是下一份資料剛好缺欄位才會現形。
+- **寫任何一次性腳本前先看根目錄有什麼**：本 repo 的 `wrapper.js`、`input.txt` 沒有明顯命名，但確實是現成工具。
+
+### 後續追蹤
+
+- [x] rebase 完成，四處衝突兩邊內容全保留；CHANGELOG 改為 `[2.7.1]`，「第一個回顧型」的宣稱歸還 2024-kyoto（2026-09-06）
+- [x] `sync-travel-spec.mjs` 購物段 `nameJp` 補上防護，2024-tokyo-disney 的 spec.md `undefined` 歸零（2026-09-06）
+- [ ] `wrapper.js` / `input.txt` 建議改名並移入 `tools/`（例：`tools/new-trip-noninteractive.js`），或直接讓 `new-trip.js` 支援 `--from-file` 參數，避免下次又被重造
+- [ ] 兩台機器的 session 之間沒有共享狀態，考慮在 `CONTRIBUTING.md` 或 `.claude/commands/` 的開工指令裡強制一次 fetch

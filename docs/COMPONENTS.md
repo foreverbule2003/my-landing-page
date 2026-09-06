@@ -300,18 +300,21 @@ AI 聊天與翻譯功能的彈窗。
 
 #### 11.6 ShoppingSection (購物清單) ✨ NEW
 
-- **用途**: 管理購物清單，按地區分類展示可勾選商品。
+- **用途**: 管理購物清單，以分類標籤篩選、展示可勾選商品。
 - **Props**:
-  - `categories` — 資料陣列（`{ title, icon, items[] }`）
+  - `wishlist` — **實際渲染的資料來源**，商品陣列（`{ name, nameJp?, desc?, price, category, shop?, image?, isBackup? }`）
+  - `categories` — 目前僅參與「是否顯示空狀態」的判斷，**不會被渲染**；篩選標籤是從 `wishlist` 各項的 `category` 取前兩字動態產生的
   - `purchased` — 已購買狀態物件（由 Firebase 或父層管理）
   - `togglePurchased(itemKey)` — 切換已購狀態
   - `setProductModalData({ isOpen, product })` — 開啟商品詳情 Modal
   - `forceOpen` — 同步展開/折疊控制
   - `theme` — `"default"` | `"forest"`（預設 `"default"`）
+  - `dayLabel` — 標題左側的日期徽章文字，預設 `"Day 1-8"`；非 8 天的旅程要自行傳入（例：`"Day 1-5"`）
 - **特點**:
-  - Firebase key 格式：`shopping-{catIdx}-{itemIdx}`（與父層保持一致）。
+  - Firebase key 格式：`wishlist-{index}`。
   - 備案商品（`isBackup: true`）以虛線邊框區分。
   - 已購商品自動沉底並加上刪除線。
+- **⚠️ 常見錯誤**: 把商品寫進 `shoppingData.categories[].items` 會導致購物頁整片空白（元件不讀它）。商品一律放 `wishlist`，用每項的 `category` 欄位分組。
 
 #### 11.6.5 Attraction Tab (景點分頁) ✨ NEW
 

@@ -10,6 +10,7 @@ const ShoppingSection = ({
   setProductModalData,
   forceOpen = null,
   theme = "default",
+  dayLabel = "Day 1-8",
 }) => {
   const t =
     {
@@ -127,7 +128,7 @@ const ShoppingSection = ({
             <div className="flex items-center justify-between gap-4 w-full">
               <div className="flex items-center gap-3">
                 <span className="text-xs font-medium text-[#5F7A61] bg-[#5F7A61]/10 px-2.5 py-0.5 rounded-full flex-shrink-0">
-                  Day 1-8
+                  {dayLabel}
                 </span>
                 <span className="font-bold text-gray-800">購買清單</span>
               </div>

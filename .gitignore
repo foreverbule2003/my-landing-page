@@ -74,3 +74,6 @@ logs/
 *.archify.html
 docs/diagrams/*.html
 docs/diagrams/*.png
+
+# 旅行社原始行程表（含業務聯絡個資，不進公開 repo；內容已整理進各旅程的 spec.md 與 trip_notes.md）
+trips/*/source_*.pdf

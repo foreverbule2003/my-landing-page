@@ -186,6 +186,10 @@ export default defineConfig({
           "trips/2026-ise-shima/index.html",
         ),
         "trips-tokyo": resolve(__dirname, "trips/2026-tokyo/index.html"),
+        "trips-tokyo-disney": resolve(
+          __dirname,
+          "trips/2024-tokyo-disney/index.html",
+        ),
         "trips-okinawa": resolve(__dirname, "trips/2026-okinawa/index.html"),
         "trips-kyoto": resolve(__dirname, "trips/2024-kyoto/index.html"),
         "trips-cebu": resolve(__dirname, "trips/2025-cebu/index.html"),
