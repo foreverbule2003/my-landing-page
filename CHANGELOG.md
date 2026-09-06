@@ -4,6 +4,20 @@
 
 格式基於 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)。
 
+## [2.7.2] - 2026-09-06 (new-trip 開工同步檢查)
+
+### 新增 (Added) 🚀
+
+- **`npm run new-trip` 執行前自動檢查遠端同步**: 先跑 `git fetch`，`behind > 0` 時中止並提示 `git pull --rebase`。建立新旅程必然改動 `vite.config.js` 的 `rollupOptions.input` 與 `src/views/TripsView.jsx` 的 `menuItems` 這兩個全域註冊點，分歧開工時兩台機器會在同幾行撞出「各插一行」型的合併衝突——2026-09-06 一天內連續發生兩次（2024-kyoto、2024-tokyo-disney），且第二次是在教訓已寫進 `tasks/lessons.md` 之後。靠人記得讀文件已證明失效，故把檢查落到工具裡。
+  - 離線或無 remote 時只警告不擋，不影響離線工作
+  - 確定要在落後狀態下建立：`SKIP_SYNC_CHECK=1 npm run new-trip`
+
+### 變更 (Changed) 🔄
+
+- **`README.md` / `CONTRIBUTING.md` / `trips/TRIP_STYLE_GUIDE.md`**: 補記上述檢查行為與被擋下時的處理方式。
+
+---
+
 ## [2.7.1] - 2026-09-06 (2024 東京迪士尼回顧行程)
 
 ### 新增 (Added) 🚀

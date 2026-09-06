@@ -33,6 +33,14 @@ npm run new-trip
 # 跟隨提示建立新的旅程資料夾 (例如：trips/2026-tokyo)
 ```
 
+> **⚠️ 落後遠端時會被擋下。** 建立新旅程會改動 `vite.config.js` 的
+> `rollupOptions.input` 與 `src/views/TripsView.jsx` 的 `menuItems` 這兩個
+> 「全域註冊點」，在分歧狀態下動手，兩台機器必然在同幾行撞出合併衝突
+> （2026-09-06 連續發生兩次，見 `tasks/lessons.md`）。腳本因此會先跑
+> `git fetch` 並在 `behind > 0` 時中止，請照提示 `git pull --rebase` 後重跑。
+> 離線或無 remote 時只警告不擋；確定要在落後狀態下建立可用
+> `SKIP_SYNC_CHECK=1 npm run new-trip`。
+
 **新增部落格/日記 (Journal):**
 目前日記透過 Firebase 管理。(CLI 新增功能即將推出)。
 

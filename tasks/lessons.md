@@ -121,7 +121,7 @@
 
 - [x] rebase 完成，三處衝突兩邊內容全保留，guard/test/build 綠燈（2026-09-06）
 - [ ] `input.txt`（new-trip 的互動輸入）與根目錄 `wrapper.js`（stub readline 的非互動執行器）在 `515f3d3` 隨旅程一起進了版控，應評估加入 `.gitignore` 或移入 `tools/`
-- [ ] 考慮讓 `npm run new-trip` 在執行前自動跑一次 `git fetch` 並在 `behind > 0` 時警告
+- [x] 讓 `npm run new-trip` 在執行前自動 `git fetch`，`behind > 0` 時**中止**（不只是警告）並提示 `git pull --rebase`；離線不擋，`SKIP_SYNC_CHECK=1` 可略過（2026-09-06，見 2.7.2）
 
 ---
 
@@ -146,4 +146,5 @@
 - [x] rebase 完成，四處衝突兩邊內容全保留；CHANGELOG 改為 `[2.7.1]`，「第一個回顧型」的宣稱歸還 2024-kyoto（2026-09-06）
 - [x] `sync-travel-spec.mjs` 購物段 `nameJp` 補上防護，2024-tokyo-disney 的 spec.md `undefined` 歸零（2026-09-06）
 - [ ] `wrapper.js` / `input.txt` 建議改名並移入 `tools/`（例：`tools/new-trip-noninteractive.js`），或直接讓 `new-trip.js` 支援 `--from-file` 參數，避免下次又被重造
-- [ ] 兩台機器的 session 之間沒有共享狀態，考慮在 `CONTRIBUTING.md` 或 `.claude/commands/` 的開工指令裡強制一次 fetch
+- [x] 檢查已落到 `tools/new-trip.js` 裡，不再依賴人記得讀文件；`CONTRIBUTING.md` 同步說明被擋下時的處理（2026-09-06）
+- [ ] 其他會動到全域註冊點的操作（新增路由、新增 Vite 入口）目前仍無同類保護

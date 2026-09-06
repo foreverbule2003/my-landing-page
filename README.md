@@ -85,7 +85,7 @@ timboy/
 | `npm run dev`      | 啟動 Vite 開發伺服器 (熱更新) |
 | `npm run build`    | 建構 Production Bundle        |
 | `npm run preview`  | 預覽 Production Build         |
-| `npm run new-trip` | 互動式建立新旅程              |
+| `npm run new-trip` | 互動式建立新旅程（執行前自動 `git fetch` 檢查是否落後遠端） |
 | `npm run sync-cb`  | 執行 CB 資料自動化同步預覽    |
 | `npm run format`   | 格式化所有程式碼              |
 

@@ -4,7 +4,7 @@
 
 ## 1. 架構與技術 (Architecture)
 
-以 `2026-tokyo` 為基準架構，新旅程請執行 `npm run new-trip` 由 `src/pages/trips/template/` 產生：
+以 `2026-tokyo` 為基準架構，新旅程請執行 `npm run new-trip` 由 `src/pages/trips/template/` 產生（該指令會先 `git fetch` 檢查是否落後遠端，落後時中止並要求先 `git pull --rebase`——原因見 `CONTRIBUTING.md`）：
 
 - **框架 Framework**: Vite + React。入口為 `trips/{year}-{location}/index.html`，應用程式碼在 `src/pages/trips/{year}-{location}/`（`main.jsx` + `App.jsx` + `data.js` + `components/`）。
 - **資料驅動 Data-driven**: 所有內容（標題、Hero、匯率、行程、住宿、記帳）皆由 `data.js` 驅動；`App.jsx` 通常不需修改。
