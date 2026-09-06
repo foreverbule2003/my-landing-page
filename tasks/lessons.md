@@ -97,4 +97,28 @@
 - [x] `sync-travel-spec.mjs` 補 options fallback 與 undefined 防護（2026-09-06）
 - [x] `data.template.js` 補上 origin/destination/type 欄位說明（2026-09-06）
 - [x] 2026-tokyo Day 5 三個方案補齊起訖點，兩份 spec.md 重生後 undefined 歸零（2026-09-06）
+- [x] 2026-okinawa 也踩到同一個坑（Day 2 路線缺起訖點），補齊後重生，三份 spec 全數歸零（2026-09-06）
 - [ ] `src/pages/trips/ise-shima/data.js` 缺 `flightData`/`accommodationData` 等匯出，`sync-travel-spec.mjs` 對它跑不起來；其 spec.md 目前是手工維護，待評估是否納入自動同步
+
+---
+
+## 2026-09-06 (2)
+
+### 錯誤模式
+
+- 開工前沒 `git fetch`，直接跑 `npm run new-trip` 建立 2024-kyoto，事後 push 才發現本地與遠端分歧（`ahead 5, behind 1`），rebase 在 `docs/SITEMAP.md`、`src/views/TripsView.jsx`、`vite.config.js` 三處衝突。
+- 落後不是今天才發生的：遠端的 `515f3d3`（2026-okinawa）是 **07/07** 推上去的，本地 08/29 那批 archify commit 就已經在分歧狀態下堆疊，今天只是把 ahead 從 3 推到 5。
+- 三個衝突點全部是 `tools/new-trip.js` 自動註冊的位置（`menuItems`、`rollupOptions.input`、SITEMAP 樹狀）。也就是說：**衝突不是內容分歧，而是「兩邊各自往同一個錨點插了一行」**。先 pull 的話，new-trip 會直接把京都插進已含沖繩的清單，一次衝突都不會有。
+
+### 修正規則
+
+- **會動到全域註冊點的操作，開工前先 `git fetch` 確認 `behind` 為 0**：scaffold（`npm run new-trip`）、新增路由 / Vite 入口 / 首頁選單 / SITEMAP 條目都算。這類操作的衝突是「插入位置衝突」，先同步就能完全避免，事後再解等於白做工。
+- **不要只信 session 起始的 git status**：那是本地快照，`clean` 只代表工作區乾淨，不代表與遠端同步。`git status -sb` 才會顯示 ahead/behind，且需要先 fetch 才準。
+- **多裝置專案把 fetch 當成開工儀式**：本 repo 有兩個作者身分（`tim` / `TimZ`）在推，分歧是常態而非意外。
+- **解「各加各的」型衝突時，順手對齊既有排序慣例**：本次 `menuItems` 依「年份新→舊」把 2024 京都移到清單最後，而不是留在 new-trip 預設插入的最前面。
+
+### 後續追蹤
+
+- [x] rebase 完成，三處衝突兩邊內容全保留，guard/test/build 綠燈（2026-09-06）
+- [ ] `input.txt`（new-trip 的互動輸入）與根目錄 `wrapper.js`（stub readline 的非互動執行器）在 `515f3d3` 隨旅程一起進了版控，應評估加入 `.gitignore` 或移入 `tools/`
+- [ ] 考慮讓 `npm run new-trip` 在執行前自動跑一次 `git fetch` 並在 `behind > 0` 時警告

@@ -245,6 +245,9 @@ export const recommendedRoutes = [
     id: 1,
     day: "Day 2 (10/03 六)",
     name: "那霸市區單軌電車一日遊",
+    origin: "Makishi Station",
+    destination: "Shuri Station",
+    type: "route",
     steps: [
       {
         line: "沖繩都市單軌電車 (Yui Rail)",

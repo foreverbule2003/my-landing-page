@@ -21,6 +21,7 @@
 - **`sync-travel-spec.mjs` 產出 `undefined` 字串**: 三處字串內插未防未定義值，且壞法是「產出看起來正常的檔案」而非拋錯，2026-tokyo 的 spec.md 因此帶著 3 個 `undefined` 存活數月。修正內容：(1) `origin` / `destination` 補上 `options[0]` 回退，與既有的 `steps` 回退對齊；(2) 起訖點兩者皆缺時整段省略而非印出 `(undefined ➔ undefined)`；(3) `act.transport.station` 缺值時省略括號。修正後重生 2026-tokyo 與 2024-kyoto 兩份 spec.md，`undefined` 歸零。
 - **`data.template.js` 補齊 `recommendedRoutes` 欄位契約**: 模板原本沒列 `origin` / `destination` / `type`，照模板填的旅程必然踩到上述問題；並註明多方案路線時起訖點改放在各 `option` 內。
 - **2026-tokyo Day 5 多方案路線**: 三個方案（輕井澤 / 高崎 / 草津溫泉）補上 `origin` / `destination`。
+- **2026-okinawa Day 2 路線**: 同樣缺 `origin` / `destination`（該旅程建立時模板尚未列出此欄位），補齊後重生 spec.md。至此三份自動同步的 spec 皆無 `undefined`。
 
 ---
 
