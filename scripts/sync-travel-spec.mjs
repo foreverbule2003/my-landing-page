@@ -50,7 +50,7 @@ async function generateSpec() {
       if (acts) {
         md += `| 時間 | 行程 | 備註 | 交通 |\n|---|---|---|---|\n`;
         acts.forEach((act) => {
-          md += `| ${act.time} | ${act.text} ${act.isFood ? "🍽️" : ""} | ${act.subText || ""} | ${act.transport ? `${act.transport.line}(${act.transport.station})` : ""} |\n`;
+          md += `| ${act.time} | ${act.text} ${act.isFood ? "🍽️" : ""} | ${act.subText || ""} | ${act.transport ? `${act.transport.line}${act.transport.station ? `(${act.transport.station})` : ""}` : ""} |\n`;
         });
         md += `\n`;
       }
@@ -60,8 +60,15 @@ async function generateSpec() {
 
   md += `## 🚃 交通推薦路線\n\n`;
   recommendedRoutes.forEach((route) => {
-    md += `### ${route.day} | ${route.name} (${route.origin} ➔ ${route.destination})\n`;
-    let steps = route.steps || (route.options ? route.options[0].steps : []);
+    // 多方案路線 (options) 的起訖點放在 option 層，回退到第一個方案
+    const firstOption = route.options ? route.options[0] : null;
+    const origin = route.origin || firstOption?.origin;
+    const destination = route.destination || firstOption?.destination;
+    // 起訖點缺漏時整段省略，不要印出 "(undefined ➔ undefined)"
+    const routeLabel =
+      origin && destination ? ` (${origin} ➔ ${destination})` : "";
+    md += `### ${route.day} | ${route.name}${routeLabel}\n`;
+    let steps = route.steps || (firstOption ? firstOption.steps : []);
     steps.forEach((step) => {
       md += `- **${step.line || step.type}** (${step.station} ${step.platform ? "月台:" + step.platform : ""}) — ${step.note || ""} [${step.fare || ""}]\n`;
     });

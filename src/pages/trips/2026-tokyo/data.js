@@ -733,6 +733,8 @@ export const recommendedRoutes = [
       {
         id: "d5-opt1",
         label: "輕井澤",
+        origin: "Karuizawa Station",
+        destination: "Naka-Karuizawa Station",
         duration: "全天",
         steps: [
           {
@@ -756,6 +758,8 @@ export const recommendedRoutes = [
       {
         id: "d5-opt2",
         label: "高崎",
+        origin: "Takasaki Station",
+        destination: "Naka-Karuizawa Station",
         duration: "全天",
         steps: [
           {
@@ -788,6 +792,8 @@ export const recommendedRoutes = [
       {
         id: "d5-opt3",
         label: "草津溫泉",
+        origin: "Kusatsu Onsen Bus Terminal",
+        destination: "Naka-Karuizawa Station",
         duration: "全天",
         steps: [
           {

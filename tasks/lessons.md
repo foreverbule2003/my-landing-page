@@ -71,3 +71,30 @@
 ### 後續追蹤
 
 - [ ] 下次改架構時，驗證 `sources` 參照是否隨程式碼漂移（規格檔釘在 commit `5c871f6`，檔案搬家會讓 evidence 驗證失敗）
+
+---
+
+## 2026-09-06
+
+### 錯誤模式
+
+- 新增 2024-kyoto 旅程時，`spec.md` 的交通章節印出 `(undefined ➔ undefined)`。查下去發現不是新旅程填錯，而是 **模板欄位與消費端腳本的契約沒對齊**：
+  - `scripts/sync-travel-spec.mjs` 讀 `route.origin` / `route.destination`，但 `src/pages/trips/template/data.template.js` 的 `recommendedRoutes` 範例根本沒列這兩欄。照模板填，必壞。
+  - 更隱蔽的是多方案路線：腳本對 `steps` 有 `route.steps || route.options[0].steps` 的 fallback，卻獨漏 origin/destination，所以 options 架構的路線就算填了也讀不到。
+  - 同一支腳本還有第二處：`act.transport.station` 缺值時直接內插，產出 `🚕 機場接送(undefined)`。
+- 2026-tokyo 的 spec.md 帶著這三個 `undefined` 存活了好幾個月沒被發現——**因為壞掉的方式是「產生出看起來正常的檔案」，不是拋錯**。
+
+### 修正規則
+
+- **模板即契約**：`data.template.js` 是消費端腳本的介面文件。腳本新讀一個欄位，模板就要同步列出並標 ★，否則照模板填的人一定漏。
+- **樣板化的資料結構要成組 fallback**：既然 `options` 是 `steps` 的替代來源，那 origin/destination/duration 等同層欄位就要一起做 fallback，不能只補一個。
+- **字串內插一律防 undefined**：產生文件的腳本，任何 `${obj.maybeMissing}` 都要嘛給預設值、要嘛整段省略。寧可少一行，不要印 `undefined`。
+- **改完腳本要回頭重生所有既有產物**：本次修完 sync 腳本後重跑 2026-tokyo 與 2024-kyoto，才把陳年的 undefined 清掉。只修腳本不重生，等於沒修。
+- **驗收用 grep 而非肉眼**：`grep -c "undefined" trips/*/spec.md` 是這類問題最省力的回歸測試。
+
+### 後續追蹤
+
+- [x] `sync-travel-spec.mjs` 補 options fallback 與 undefined 防護（2026-09-06）
+- [x] `data.template.js` 補上 origin/destination/type 欄位說明（2026-09-06）
+- [x] 2026-tokyo Day 5 三個方案補齊起訖點，兩份 spec.md 重生後 undefined 歸零（2026-09-06）
+- [ ] `src/pages/trips/ise-shima/data.js` 缺 `flightData`/`accommodationData` 等匯出，`sync-travel-spec.mjs` 對它跑不起來；其 spec.md 目前是手工維護，待評估是否納入自動同步

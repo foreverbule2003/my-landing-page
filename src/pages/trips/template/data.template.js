@@ -162,6 +162,12 @@ export const recommendedRoutes = [
     id: 1,
     day: "Day 1 (6/17 三)", // 格式 "Day X (日期)" 會自動拆解為徽章 + 日期
     name: "機場 → 市區",
+    // ★ origin / destination：起訖點英文名稱
+    //   scripts/sync-travel-spec.mjs 用它們產生 spec.md 的交通章節標題，
+    //   缺少時該段標題會少掉「(起點 ➔ 終點)」。多方案路線改放在各 option 內。
+    origin: "Narita Airport Terminal 1",
+    destination: "Yokohama Station",
+    type: "route", // "route"（大眾運輸）| "bike"（單車日）
     // ★ steps：逐段交通細節
     steps: [
       {
@@ -179,9 +185,10 @@ export const recommendedRoutes = [
       },
     ],
     // (Optional) 多方案路線：提供 options 供切換
+    //   使用 options 時，origin/destination 改放在各 option 內
     // options: [
-    //   { label: "方案 A：N'EX", name: "…", steps: [] },
-    //   { label: "方案 B：巴士", name: "…", steps: [] },
+    //   { id: "d1-opt1", label: "方案 A：N'EX", origin: "…", destination: "…", duration: "…", steps: [] },
+    //   { id: "d1-opt2", label: "方案 B：巴士", origin: "…", destination: "…", duration: "…", steps: [] },
     // ],
   },
 ];
